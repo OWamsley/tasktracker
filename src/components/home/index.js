@@ -10,9 +10,20 @@ export class Home extends Component {
 
 
         this.state = {
-
+            apiResponse: ""
         }
     }
+
+    callAPI(){
+        fetch("http://localhost:3001/users")
+            .then(res=> res.json())
+            .then(res => this.setState({apiResponse : res.message}));
+    }
+
+    componentDidMount(){
+        this.callAPI();
+    }
+
     render() {
         const { user, isAuthenticated, isLoading } = this.props.auth0;
         if (isLoading) {
@@ -26,7 +37,9 @@ export class Home extends Component {
 
         }
         else{
-            return(<div>Nobody logged in </div>)
+            return(<div>Nobody logged in 
+                {this.state.apiResponse}
+            </div>)
         }
     }
 
