@@ -3,3 +3,4 @@
 
 tasktracker/node_modules/
 api/node_modules/
+.env

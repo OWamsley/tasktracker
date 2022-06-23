@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import LogoutButton from '../logoutbutton';
 import Profile from '../profile/index';
 import { useAuth0, withAuth0 } from "@auth0/auth0-react";
+import LoginButton from '../loginbutton';
+import useAPI from '../../useAPI';
 
 
 export class Home extends Component {
@@ -15,9 +17,13 @@ export class Home extends Component {
     }
 
     callAPI(){
-        fetch("http://localhost:3001/users")
-            .then(res=> res.json())
-            .then(res => this.setState({apiResponse : res.message}));
+        const opts = {
+            audience: "https:tasktracker/api",
+            scope: "read:current_user update:current_user_metadata"
+        }
+        const { login, getAccessTokenWithPopup } = useAuth0();
+        const { loading, error, refresh, data: users} = useAPI('http://localhost:3001/projects/private', opts);
+        const getTokenAndTryAgain = as
     }
 
     componentDidMount(){
@@ -32,6 +38,7 @@ export class Home extends Component {
         if (isAuthenticated) {
             return (<>
             <div>Hello {user.name}!</div>
+            {this.state.apiResponse}
             <LogoutButton />
             </>)
 
@@ -39,6 +46,7 @@ export class Home extends Component {
         else{
             return(<div>Nobody logged in 
                 {this.state.apiResponse}
+                <LoginButton />
             </div>)
         }
     }

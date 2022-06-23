@@ -11,6 +11,8 @@ root.render(
   domain="dev-ugfsod-i.us.auth0.com"
   clientId="QGddAgEAjXAL2EcYw7ilpHPsQvGyB48f"
   redirectUri="http://localhost:3000/"
+  audience="https:tasktracker/api"
+  scope="read:current_user update:current_user_metadata"
 >
   <App />
 </Auth0Provider>,
